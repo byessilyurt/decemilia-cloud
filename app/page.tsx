@@ -1,14 +1,51 @@
-export default function Home() {
+import { Navigation } from '@/components/navigation';
+import { HeroSection } from '@/components/hero-section';
+import { ProjectsSection } from '@/components/projects-section';
+import { BlogSection } from '@/components/blog-section';
+import { ContactForm } from '@/components/contact-form';
+import { Footer } from '@/components/footer';
+import { supabase } from '@/lib/supabase';
+
+async function getProjects() {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    return [];
+  }
+
+  return data || [];
+}
+
+async function getBlogs() {
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .order('published_at', { ascending: false });
+
+  if (error) {
+    return [];
+  }
+
+  return data || [];
+}
+
+export default async function Home() {
+  const projects = await getProjects();
+  const blogs = await getBlogs();
+
   return (
-    <div
-      style={{
-        maxWidth: 1280,
-        margin: '0 auto',
-        padding: '2rem',
-        textAlign: 'center',
-      }}
-    >
-      Start prompting.
+    <div className="min-h-screen">
+      <Navigation />
+      <main>
+        <HeroSection />
+        <ProjectsSection projects={projects} />
+        <BlogSection blogs={blogs} />
+        <ContactForm />
+      </main>
+      <Footer />
     </div>
   );
 }
