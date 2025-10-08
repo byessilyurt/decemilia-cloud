@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 220 15% 6%;
-    --foreground: 0 0% 98%;
-    --card: 220 15% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 15% 8%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 220 15% 6%;
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 220 15% 16%;
-    --accent-foreground: 0 0% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 5%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 5%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
     --ring: 0 0% 80%;
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
 }
 
@@ -33,12 +33,14 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-black text-white antialiased;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+    letter-spacing: -0.01em;
   }
 
   html {
     scroll-behavior: smooth;
+    background: #000000;
   }
 }
 
@@ -60,86 +62,29 @@
   }
 }
 
-.cloud-main {
-  width: 500px;
-  height: 500px;
+.cloud-blob {
+  width: 800px;
+  height: 800px;
   background: radial-gradient(
     circle at center,
-    rgba(147, 197, 253, 0.18) 0%,
-    rgba(147, 197, 253, 0.12) 30%,
-    rgba(96, 165, 250, 0.08) 50%,
-    transparent 70%
+    rgba(59, 130, 246, 0.05) 0%,
+    rgba(59, 130, 246, 0.02) 30%,
+    transparent 60%
   );
-  filter: blur(60px);
+  filter: blur(100px);
+  opacity: 0.5;
   mix-blend-mode: screen;
   will-change: transform;
-}
-
-.cloud-wisp {
-  filter: blur(50px);
-  mix-blend-mode: screen;
-  will-change: transform;
-}
-
-.cloud-wisp-1 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(
-    circle at center,
-    rgba(191, 219, 254, 0.12) 0%,
-    rgba(147, 197, 253, 0.06) 40%,
-    transparent 70%
-  );
-}
-
-.cloud-wisp-2 {
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(
-    circle at center,
-    rgba(165, 180, 252, 0.1) 0%,
-    rgba(129, 140, 248, 0.05) 40%,
-    transparent 70%
-  );
-}
-
-.cloud-wisp-3 {
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(
-    circle at center,
-    rgba(147, 197, 253, 0.08) 0%,
-    rgba(96, 165, 250, 0.04) 40%,
-    transparent 70%
-  );
 }
 
 @media (max-width: 768px) {
-  .cloud-main {
-    width: 350px;
-    height: 350px;
-    filter: blur(40px);
-  }
-
-  .cloud-wisp-1 {
-    width: 250px;
-    height: 250px;
-  }
-
-  .cloud-wisp-2 {
-    width: 200px;
-    height: 200px;
-  }
-
-  .cloud-wisp-3 {
-    width: 220px;
-    height: 220px;
+  .cloud-blob {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cloud-main,
-  .cloud-wisp {
+  .cloud-blob {
     transition: none;
     animation: none;
   }

@@ -1,45 +1,36 @@
-import { Github, Linkedin, Twitter, Mail, Cloud } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
+    { icon: Linkedin, href: 'https://linkedin.com/company/decemilia', label: 'LinkedIn' },
     { icon: Github, href: 'https://github.com/decemilia', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/yusuf-yesilyurt', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/decemilia', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:y.yesilyurt14@gmail.com', label: 'Email' },
+    { icon: Mail, href: 'mailto:contact@decemilia.cloud', label: 'Contact' },
   ];
 
   return (
-    <footer className="border-t border-border bg-background/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Cloud className="w-5 h-5 text-blue-400/80" />
-            <span className="text-lg font-semibold text-blue-200/90">Decemilia</span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {socialLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-blue-400 transition-colors"
-                  aria-label={link.label}
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              );
-            })}
-          </div>
-
-          <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; {currentYear} Decemilia. Founded by Yusuf Yesilyurt. All rights reserved.</p>
-          </div>
+    <footer className="bg-black border-t border-white/5 py-12">
+      <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="text-gray-600 text-sm">
+          © {currentYear} Decemilia Cloud. AI-powered solutions.
+        </div>
+        <div className="flex gap-6">
+          {socialLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-white transition-colors"
+                aria-label={link.label}
+              >
+                <Icon className="w-5 h-5" />
+              </a>
+            );
+          })}
         </div>
       </div>
     </footer>

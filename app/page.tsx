@@ -1,48 +1,18 @@
 import { Navigation } from '@/components/navigation';
 import { HeroSection } from '@/components/hero-section';
-import { ProjectsSection } from '@/components/projects-section';
-import { BlogSection } from '@/components/blog-section';
+import { SolutionsSection } from '@/components/solutions-section';
+import { CaseStudiesSection } from '@/components/case-studies-section';
 import { ContactForm } from '@/components/contact-form';
 import { Footer } from '@/components/footer';
-import { supabase } from '@/lib/supabase';
 
-async function getProjects() {
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    return [];
-  }
-
-  return data || [];
-}
-
-async function getBlogs() {
-  const { data, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .order('published_at', { ascending: false });
-
-  if (error) {
-    return [];
-  }
-
-  return data || [];
-}
-
-export default async function Home() {
-  const projects = await getProjects();
-  const blogs = await getBlogs();
-
+export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
       <Navigation />
       <main>
         <HeroSection />
-        <ProjectsSection projects={projects} />
-        <BlogSection blogs={blogs} />
+        <SolutionsSection />
+        <CaseStudiesSection />
         <ContactForm />
       </main>
       <Footer />
