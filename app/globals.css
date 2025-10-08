@@ -59,3 +59,88 @@
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
   }
 }
+
+.cloud-main {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle at center,
+    rgba(147, 197, 253, 0.18) 0%,
+    rgba(147, 197, 253, 0.12) 30%,
+    rgba(96, 165, 250, 0.08) 50%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.cloud-wisp {
+  filter: blur(50px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+
+.cloud-wisp-1 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(
+    circle at center,
+    rgba(191, 219, 254, 0.12) 0%,
+    rgba(147, 197, 253, 0.06) 40%,
+    transparent 70%
+  );
+}
+
+.cloud-wisp-2 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle at center,
+    rgba(165, 180, 252, 0.1) 0%,
+    rgba(129, 140, 248, 0.05) 40%,
+    transparent 70%
+  );
+}
+
+.cloud-wisp-3 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(
+    circle at center,
+    rgba(147, 197, 253, 0.08) 0%,
+    rgba(96, 165, 250, 0.04) 40%,
+    transparent 70%
+  );
+}
+
+@media (max-width: 768px) {
+  .cloud-main {
+    width: 350px;
+    height: 350px;
+    filter: blur(40px);
+  }
+
+  .cloud-wisp-1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .cloud-wisp-2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .cloud-wisp-3 {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud-main,
+  .cloud-wisp {
+    transition: none;
+    animation: none;
+  }
+}
