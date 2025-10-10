@@ -1,12 +1,11 @@
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/yourusername', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/yourusername', label: 'Twitter' },
+    { icon: Github, href: 'https://github.com/byessilyurt', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/yessilyurt', label: 'LinkedIn' },
     { icon: Mail, href: 'mailto:y.yesilyurt14@gmail.com', label: 'Email' },
   ];
 
@@ -33,7 +32,7 @@ export function Footer() {
           </div>
 
           <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; {currentYear} Your Name. All rights reserved.</p>
+            <p>&copy; {currentYear} Yusuf Yesilyurt. All rights reserved.</p>
           </div>
         </div>
       </div>

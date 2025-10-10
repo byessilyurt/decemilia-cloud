@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { Button } from './ui/button';
 import { MouseFollowerGradient } from './mouse-follower-gradient';
+import { HeroKeywords } from './hero-keywords';
 import { useMousePosition } from '@/hooks/use-mouse-position';
 
 export function HeroSection() {
@@ -32,10 +33,10 @@ export function HeroSection() {
         <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-base sm:text-lg md:text-xl font-medium text-muted-foreground tracking-wide animate-fade-in">
-              Your Name
+              Yusuf Yesilyurt
             </h2>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gradient">
-              Developer & Creator
+              Full-Stack Developer & AI Engineer
             </h1>
           </div>
 
@@ -58,7 +59,9 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <HeroKeywords />
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
         <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex items-start justify-center p-2">
           <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full" />
         </div>

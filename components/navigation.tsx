@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Code as Code2 } from 'lucide-react';
+import { Menu, X, Cloud } from 'lucide-react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
@@ -33,8 +33,8 @@ export function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <Link href="/" className="flex items-center space-x-2 group">
-            <Code2 className="h-6 w-6 sm:h-7 sm:w-7 transition-transform group-hover:scale-110" />
-            <span className="font-bold text-lg sm:text-xl tracking-tight">Portfolio</span>
+            <Cloud className="h-6 w-6 sm:h-7 sm:w-7 transition-transform group-hover:scale-110" />
+            <span className="font-bold text-lg sm:text-xl tracking-tight">decemilia</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
