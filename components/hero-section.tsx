@@ -1,52 +1,54 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { CloudFollower } from './cloud-follower';
+import { ArrowDown } from 'lucide-react';
+import { Button } from './ui/button';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-black overflow-hidden flex items-center justify-center">
-      <CloudFollower />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-8 text-center">
-        <motion.h1
-          className="text-7xl md:text-8xl font-light text-white mb-8 tracking-tight"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          AI Automation Solutions
-        </motion.h1>
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                           linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px',
+        }}
+      />
 
-        <motion.p
-          className="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-        >
-          We build intelligent systems that transform businesses. From custom AI integrations
-          to automated workflows and modern web applications.
-        </motion.p>
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-base sm:text-lg md:text-xl font-medium text-muted-foreground tracking-wide animate-fade-in">
+              Your Name
+            </h2>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gradient">
+              Developer & Creator
+            </h1>
+          </div>
 
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-        >
-          <a
-            href="#solutions"
-            className="px-8 py-3 bg-white text-black font-medium hover:bg-gray-200 transition-colors"
-          >
-            Explore Solutions
-          </a>
-          <a
-            href="#contact"
-            className="px-8 py-3 border border-white/20 text-white hover:border-white/40 transition-colors"
-          >
-            Schedule Demo
-          </a>
-        </motion.div>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Crafting scalable web experiences with modern technologies
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 sm:pt-8">
+            <Button
+              size="lg"
+              className="glow-hover text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto"
+              asChild
+            >
+              <a href="#projects">
+                View Projects
+                <ArrowDown className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex items-start justify-center p-2">
+          <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full" />
+        </div>
       </div>
     </section>
   );

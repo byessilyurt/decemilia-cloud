@@ -10,28 +10,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://decemilia.cloud'),
+  metadataBase: new URL('https://yourportfolio.com'),
   title: {
-    default: 'Decemilia | Cloud-Native Solutions by Yusuf Yesilyurt',
-    template: '%s | Decemilia',
+    default: 'Your Name | Developer & Creator',
+    template: '%s | Your Name',
   },
-  description: 'Decemilia delivers cutting-edge cloud-native solutions and modern web development. Founded by Yusuf Yesilyurt, we build scalable applications with Next.js, TypeScript, and cloud technologies.',
-  keywords: ['Cloud Native', 'Web Development', 'Full Stack', 'React', 'Next.js', 'TypeScript', 'Decemilia', 'Yusuf Yesilyurt', 'Cloud Solutions'],
-  authors: [{ name: 'Yusuf Yesilyurt' }],
-  creator: 'Yusuf Yesilyurt',
+  description: 'Personal portfolio showcasing web development projects, technical articles, and expertise in modern web technologies.',
+  keywords: ['Web Developer', 'Full Stack', 'React', 'Next.js', 'TypeScript', 'Portfolio'],
+  authors: [{ name: 'Your Name' }],
+  creator: 'Your Name',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://decemilia.cloud',
-    title: 'Decemilia | Cloud-Native Solutions',
-    description: 'Cloud-native solutions and modern web development by Yusuf Yesilyurt.',
-    siteName: 'Decemilia',
+    url: 'https://yourportfolio.com',
+    title: 'Your Name | Developer & Creator',
+    description: 'Personal portfolio showcasing web development projects and technical articles.',
+    siteName: 'Your Name Portfolio',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Decemilia | Cloud-Native Solutions',
-    description: 'Cloud-native solutions and modern web development by Yusuf Yesilyurt.',
-    creator: '@decemilia',
+    title: 'Your Name | Developer & Creator',
+    description: 'Personal portfolio showcasing web development projects and technical articles.',
+    creator: '@yourusername',
   },
   robots: {
     index: true,

@@ -1,36 +1,40 @@
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://linkedin.com/company/decemilia', label: 'LinkedIn' },
-    { icon: Github, href: 'https://github.com/decemilia', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:contact@decemilia.cloud', label: 'Contact' },
+    { icon: Github, href: 'https://github.com/yourusername', label: 'GitHub' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/yourusername', label: 'LinkedIn' },
+    { icon: Twitter, href: 'https://twitter.com/yourusername', label: 'Twitter' },
+    { icon: Mail, href: 'mailto:y.yesilyurt14@gmail.com', label: 'Email' },
   ];
 
   return (
-    <footer className="bg-black border-t border-white/5 py-12">
-      <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="text-gray-600 text-sm">
-          © {currentYear} Decemilia Cloud. AI-powered solutions.
-        </div>
-        <div className="flex gap-6">
-          {socialLinks.map((link) => {
-            const Icon = link.icon;
-            return (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-white transition-colors"
-                aria-label={link.label}
-              >
-                <Icon className="w-5 h-5" />
-              </a>
-            );
-          })}
+    <footer className="border-t border-border bg-background/50 backdrop-blur-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="flex flex-col items-center gap-6">
+          <div className="flex items-center gap-4">
+            {socialLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={link.label}
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="text-center text-sm text-muted-foreground">
+            <p>&copy; {currentYear} Your Name. All rights reserved.</p>
+          </div>
         </div>
       </div>
     </footer>

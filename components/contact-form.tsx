@@ -4,15 +4,25 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Send, Mail, User, MessageSquare } from 'lucide-react';
+import { Button } from './ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 import { toast } from 'sonner';
 import { supabase } from '@/lib/supabase';
+import type { Database } from '@/lib/database.types';
 
 const contactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
   email: z.string().email('Invalid email address'),
-  company: z.string().min(2, 'Company name must be at least 2 characters').max(100),
   message: z.string().min(10, 'Message must be at least 10 characters').max(1000),
 });
 
@@ -26,7 +36,6 @@ export function ContactForm() {
     defaultValues: {
       name: '',
       email: '',
-      company: '',
       message: '',
     },
   });
@@ -38,19 +47,19 @@ export function ContactForm() {
       const { error } = await (supabase.from('contact_submissions') as any).insert({
         name: data.name,
         email: data.email,
-        message: `Company: ${data.company}\n\n${data.message}`,
+        message: data.message,
       });
 
       if (error) throw error;
 
       toast.success('Message sent successfully!', {
-        description: "We'll get back to you within 24 hours.",
+        description: 'Thank you for reaching out. I will get back to you soon.',
       });
 
       form.reset();
     } catch (error) {
       toast.error('Failed to send message', {
-        description: 'Please try again or contact us directly.',
+        description: 'Please try again or contact me directly via email.',
       });
     } finally {
       setIsSubmitting(false);
@@ -58,106 +67,114 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contact" className="bg-black py-24 border-t border-white/5">
-      <div className="max-w-3xl mx-auto px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-5xl font-light text-white mb-4">Schedule a Demo</h2>
-          <p className="text-gray-400">Let's discuss how we can transform your business with AI</p>
-        </motion.div>
-
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          viewport={{ once: true }}
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-        >
-          <div>
-            <label htmlFor="name" className="block text-gray-400 text-sm mb-2">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              {...form.register('name')}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:border-white/20 focus:outline-none transition-colors"
-              placeholder="Your name"
-            />
-            {form.formState.errors.name && (
-              <p className="text-red-500 text-sm mt-1">{form.formState.errors.name.message}</p>
-            )}
+    <section id="contact" className="py-16 sm:py-20 lg:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+              Get In Touch
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground">
+              Have a project in mind? Let&apos;s work together to build something amazing.
+            </p>
           </div>
 
-          <div>
-            <label htmlFor="email" className="block text-gray-400 text-sm mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              {...form.register('email')}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:border-white/20 focus:outline-none transition-colors"
-              placeholder="your.email@company.com"
-            />
-            {form.formState.errors.email && (
-              <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
-            )}
-          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Your name"
+                        className="h-12 text-base"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div>
-            <label htmlFor="company" className="block text-gray-400 text-sm mb-2">
-              Company
-            </label>
-            <input
-              id="company"
-              type="text"
-              {...form.register('company')}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:border-white/20 focus:outline-none transition-colors"
-              placeholder="Your company name"
-            />
-            {form.formState.errors.company && (
-              <p className="text-red-500 text-sm mt-1">{form.formState.errors.company.message}</p>
-            )}
-          </div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base flex items-center gap-2">
+                      <Mail className="h-4 w-4" />
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="your.email@example.com"
+                        className="h-12 text-base"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <div>
-            <label htmlFor="message" className="block text-gray-400 text-sm mb-2">
-              Message
-            </label>
-            <textarea
-              id="message"
-              {...form.register('message')}
-              rows={6}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 text-white placeholder-gray-600 focus:border-white/20 focus:outline-none transition-colors resize-none"
-              placeholder="Tell us about your project..."
-            />
-            {form.formState.errors.message && (
-              <p className="text-red-500 text-sm mt-1">{form.formState.errors.message.message}</p>
-            )}
-          </div>
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" />
+                      Message
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Tell me about your project..."
+                        className="min-h-[150px] text-base resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full px-8 py-3 bg-white text-black font-medium hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {isSubmitting ? (
-              'Sending...'
-            ) : (
-              <>
-                Send Message
-                <Send className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </motion.form>
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full text-base glow-hover"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  'Sending...'
+                ) : (
+                  <>
+                    Send Message
+                    <Send className="ml-2 h-5 w-5" />
+                  </>
+                )}
+              </Button>
+            </form>
+          </Form>
+
+          <div className="mt-12 text-center">
+            <p className="text-sm text-muted-foreground">
+              Or email me directly at{' '}
+              <a
+                href="mailto:y.yesilyurt14@gmail.com"
+                className="text-primary hover:underline"
+              >
+                y.yesilyurt14@gmail.com
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
