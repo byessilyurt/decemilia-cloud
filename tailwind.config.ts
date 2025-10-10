@@ -60,6 +60,16 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        purple: {
+          400: '#a855f7',
+          500: '#9333ea',
+        },
+        pink: {
+          500: '#ec4899',
+        },
+        indigo: {
+          500: '#6366f1',
+        },
       },
       keyframes: {
         'accordion-down': {
@@ -78,10 +88,21 @@ const config: Config = {
             height: '0',
           },
         },
+        'fade-in': {
+          from: {
+            opacity: '0',
+            transform: 'translateY(10px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in': 'fade-in 0.6s ease-out',
       },
     },
   },

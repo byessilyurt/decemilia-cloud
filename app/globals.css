@@ -58,4 +58,29 @@
   .glow-hover:hover {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
   }
+
+  @keyframes keyword-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .keyword-pulse {
+    animation: keyword-pulse 4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .keyword-pulse {
+      animation: none;
+    }
+
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

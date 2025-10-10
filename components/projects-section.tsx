@@ -1,4 +1,5 @@
 import { ProjectCard } from './project-card';
+import { AnimatedKeywords } from './animated-keywords';
 import type { Project } from '@/lib/database.types';
 
 interface ProjectsSectionProps {
@@ -17,6 +18,8 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
             A selection of work showcasing expertise in modern web development
           </p>
         </div>
+
+        <AnimatedKeywords />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {projects.length > 0 ? (

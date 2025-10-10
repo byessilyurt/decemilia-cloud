@@ -1,10 +1,23 @@
+'use client';
+
+import { useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { Button } from './ui/button';
+import { MouseFollowerGradient } from './mouse-follower-gradient';
+import { useMousePosition } from '@/hooks/use-mouse-position';
 
 export function HeroSection() {
+  const heroRef = useRef<HTMLElement>(null);
+  const mousePosition = useMousePosition(heroRef);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+
+      <MouseFollowerGradient x={mousePosition.x} y={mousePosition.y} />
 
       <div
         className="absolute inset-0 opacity-20"

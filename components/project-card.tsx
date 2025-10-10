@@ -12,14 +12,14 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="group overflow-hidden border-border bg-card hover:border-muted-foreground/50 transition-all duration-300 glow-hover">
+    <Card className="group overflow-hidden border-border bg-card hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] hover:-translate-y-2">
       <div className="relative h-48 sm:h-56 overflow-hidden bg-secondary">
         {project.image_url ? (
           <Image
             src={project.image_url}
             alt={project.title}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -46,7 +46,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <Badge
               key={tech}
               variant="secondary"
-              className="text-xs font-mono bg-secondary/50 hover:bg-secondary"
+              className="text-xs font-mono bg-purple-500/10 hover:bg-purple-500/30 border border-purple-500/20 transition-colors duration-300"
             >
               {tech}
             </Badge>
