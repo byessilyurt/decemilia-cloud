@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Twitter, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Navigation } from '@/components/navigation';
 import { supabase } from '@/lib/supabase';
 import { format } from 'date-fns';
+import { marked } from 'marked';
 import type { Metadata } from 'next';
 import type { Blog } from '@/lib/database.types';
 
@@ -63,9 +65,13 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 
+  const htmlContent = await marked(blog.content);
+
   return (
-    <div className="min-h-screen pt-20 sm:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="min-h-screen">
+      <Navigation />
+      <div className="pt-20 sm:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <Button variant="ghost" size="sm" asChild className="mb-8">
           <Link href="/#blog">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -120,6 +126,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
             <div
               className="prose prose-invert prose-lg max-w-none
                 prose-headings:font-bold prose-headings:tracking-tight
+                prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
                 prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
                 prose-p:text-muted-foreground prose-p:leading-relaxed
@@ -129,7 +136,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 prose-pre:bg-secondary prose-pre:border prose-pre:border-border
                 prose-ul:text-muted-foreground prose-ol:text-muted-foreground
                 prose-li:marker:text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br/>') }}
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
           </div>
 
@@ -153,6 +160,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
             </div>
           </div>
         </article>
+        </div>
       </div>
     </div>
   );

@@ -8,41 +8,55 @@ const keywords = [
   'Next.js',
   'RAG',
   'LLM',
-  'Vector DB',
-  'FastAPI',
-  'Cloud Arch'
+  'Automation',
+  'n8n',
+  'Python'
 ];
 
-export function HeroKeywords() {
+export function KeywordsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 300);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-    return () => clearTimeout(timer);
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
   }, []);
 
   return (
-    <div ref={sectionRef} className="absolute bottom-20 left-0 right-0 z-10 px-4">
-      <div className="container mx-auto">
-        <h3 className="text-center text-sm sm:text-base font-semibold text-muted-foreground/80 mb-4 sm:mb-6">
+    <section ref={sectionRef} className="py-12 sm:py-16 bg-background/50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 className="text-center text-base sm:text-lg font-semibold text-muted-foreground mb-6 sm:mb-8">
           Core Technologies
         </h3>
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6">
           {keywords.map((keyword, index) => (
-            <div key={keyword} className="flex items-center gap-2 sm:gap-3 md:gap-4">
+            <div key={keyword} className="flex items-center gap-3 sm:gap-4 md:gap-6">
               <span
                 className={`
-                  text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold
+                  text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold
                   bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500
                   bg-clip-text text-transparent
                   transition-all duration-700 ease-out
                   hover:scale-110 cursor-default
                   keyword-pulse
-                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
                 `}
                 style={{
                   transitionDelay: `${index * 100}ms`,
@@ -63,9 +77,9 @@ export function HeroKeywords() {
               {index < keywords.length - 1 && (
                 <span
                   className={`
-                    text-base sm:text-lg md:text-xl text-purple-400/60
+                    text-xl sm:text-2xl md:text-3xl text-purple-400/60
                     transition-all duration-700 ease-out
-                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
                   `}
                   style={{
                     transitionDelay: `${index * 100 + 50}ms`,
@@ -78,6 +92,6 @@ export function HeroKeywords() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

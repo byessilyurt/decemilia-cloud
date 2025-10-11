@@ -1,5 +1,6 @@
 import { Navigation } from '@/components/navigation';
 import { HeroSection } from '@/components/hero-section';
+import { KeywordsSection } from '@/components/keywords-section';
 import { ProjectsSection } from '@/components/projects-section';
 import { BlogSection } from '@/components/blog-section';
 import { ContactForm } from '@/components/contact-form';
@@ -41,6 +42,7 @@ export default async function Home() {
       <Navigation />
       <main>
         <HeroSection />
+        <KeywordsSection />
         <ProjectsSection projects={projects} />
         <BlogSection blogs={blogs} />
         <ContactForm />

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Navigation } from '@/components/navigation';
 import { supabase } from '@/lib/supabase';
 import type { Metadata } from 'next';
 import type { Project } from '@/lib/database.types';
@@ -56,8 +57,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="min-h-screen pt-20 sm:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="min-h-screen">
+      <Navigation />
+      <div className="pt-20 sm:pt-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <Button variant="ghost" size="sm" asChild className="mb-8">
           <Link href="/#projects">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -121,6 +124,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               />
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>

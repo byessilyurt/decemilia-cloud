@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { ArrowDown } from 'lucide-react';
 import { Button } from './ui/button';
 import { MouseFollowerGradient } from './mouse-follower-gradient';
-import { HeroKeywords } from './hero-keywords';
 import { useMousePosition } from '@/hooks/use-mouse-position';
 
 export function HeroSection() {
@@ -59,9 +58,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <HeroKeywords />
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex items-start justify-center p-2">
           <div className="w-1.5 h-1.5 bg-muted-foreground rounded-full" />
         </div>
