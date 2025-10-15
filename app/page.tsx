@@ -5,9 +5,10 @@ import { ProjectsSection } from '@/components/projects-section';
 import { BlogSection } from '@/components/blog-section';
 import { ContactForm } from '@/components/contact-form';
 import { Footer } from '@/components/footer';
-import { supabase } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase';
 
 async function getProjects() {
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from('projects')
     .select('*')
@@ -21,6 +22,7 @@ async function getProjects() {
 }
 
 async function getBlogs() {
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from('blogs')
     .select('*')

@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Navigation } from '@/components/navigation';
-import { supabase } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase';
 import type { Metadata } from 'next';
 import type { Project } from '@/lib/database.types';
 
@@ -16,6 +16,7 @@ interface ProjectPageProps {
 }
 
 async function getProject(slug: string): Promise<Project | null> {
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from('projects')
     .select('*')

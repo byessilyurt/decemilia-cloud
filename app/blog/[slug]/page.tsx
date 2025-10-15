@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, Clock, Twitter, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Navigation } from '@/components/navigation';
-import { supabase } from '@/lib/supabase';
+import { createServerClient } from '@/lib/supabase';
 import { format } from 'date-fns';
 import { marked } from 'marked';
 import type { Metadata } from 'next';
@@ -18,6 +18,7 @@ interface BlogPageProps {
 }
 
 async function getBlog(slug: string): Promise<Blog | null> {
+  const supabase = createServerClient();
   const { data, error } = await supabase
     .from('blogs')
     .select('*')
