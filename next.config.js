@@ -11,11 +11,8 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...(config.externals || []), '@supabase/supabase-js'];
-    }
-    return config;
+  experimental: {
+    serverComponentsExternalPackages: ['@supabase/supabase-js'],
   },
 };
 
