@@ -1,12 +1,14 @@
-import { notFound } from 'next/navigation';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Navigation } from '@/components/navigation';
-import { createServerClient } from '@/lib/supabase';
-import type { Metadata } from 'next';
+import { supabase } from '@/lib/supabase';
 import type { Project } from '@/lib/database.types';
 
 interface ProjectPageProps {
@@ -15,46 +17,40 @@ interface ProjectPageProps {
   };
 }
 
-async function getProject(slug: string): Promise<Project | null> {
-  const supabase = createServerClient();
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .eq('slug', slug)
-    .maybeSingle();
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const router = useRouter();
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (error || !data) {
-    return null;
-  }
+  useEffect(() => {
+    async function fetchProject() {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .eq('slug', params.slug)
+        .maybeSingle();
 
-  return data;
-}
+      if (error || !data) {
+        router.push('/404');
+        return;
+      }
 
-export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = await getProject(params.slug);
+      setProject(data);
+      setLoading(false);
+    }
 
-  if (!project) {
-    return {
-      title: 'Project Not Found',
-    };
-  }
+    fetchProject();
+  }, [params.slug, router]);
 
-  return {
-    title: `${project.title} | Portfolio`,
-    description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      images: project.image_url ? [project.image_url] : [],
-    },
-  };
-}
-
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await getProject(params.slug);
-
-  if (!project) {
-    notFound();
+  if (loading || !project) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="pt-20 sm:pt-24 flex items-center justify-center min-h-[60vh]">
+          <div className="text-muted-foreground">Loading...</div>
+        </div>
+      </div>
+    );
   }
 
   return (

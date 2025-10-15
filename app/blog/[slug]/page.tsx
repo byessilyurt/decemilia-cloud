@@ -1,14 +1,16 @@
-import { notFound } from 'next/navigation';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Twitter, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Navigation } from '@/components/navigation';
-import { createServerClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { format } from 'date-fns';
 import { marked } from 'marked';
-import type { Metadata } from 'next';
 import type { Blog } from '@/lib/database.types';
 
 interface BlogPageProps {
@@ -17,56 +19,50 @@ interface BlogPageProps {
   };
 }
 
-async function getBlog(slug: string): Promise<Blog | null> {
-  const supabase = createServerClient();
-  const { data, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .eq('slug', slug)
-    .maybeSingle();
+export default function BlogPage({ params }: BlogPageProps) {
+  const router = useRouter();
+  const [blog, setBlog] = useState<Blog | null>(null);
+  const [htmlContent, setHtmlContent] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  if (error || !data) {
-    return null;
-  }
+  useEffect(() => {
+    async function fetchBlog() {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('slug', params.slug)
+        .maybeSingle();
 
-  return data;
-}
+      if (error || !data) {
+        router.push('/404');
+        return;
+      }
 
-export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
-  const blog = await getBlog(params.slug);
+      const blogData = data as Blog;
+      setBlog(blogData);
+      const html = await marked(blogData.content);
+      setHtmlContent(html);
+      setLoading(false);
+    }
 
-  if (!blog) {
-    return {
-      title: 'Blog Post Not Found',
-    };
-  }
+    fetchBlog();
+  }, [params.slug, router]);
 
-  return {
-    title: `${blog.title} | Blog`,
-    description: blog.excerpt,
-    openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
-      images: blog.cover_image ? [blog.cover_image] : [],
-      type: 'article',
-      publishedTime: blog.published_at,
-    },
-  };
-}
-
-export default async function BlogPage({ params }: BlogPageProps) {
-  const blog = await getBlog(params.slug);
-
-  if (!blog) {
-    notFound();
+  if (loading || !blog) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="pt-20 sm:pt-24 flex items-center justify-center min-h-[60vh]">
+          <div className="text-muted-foreground">Loading...</div>
+        </div>
+      </div>
+    );
   }
 
   const publishedDate = new Date(blog.published_at);
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(blog.title)}&url=${encodeURIComponent(shareUrl)}`;
   const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
-
-  const htmlContent = await marked(blog.content);
 
   return (
     <div className="min-h-screen">

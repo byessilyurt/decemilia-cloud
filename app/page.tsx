@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Navigation } from '@/components/navigation';
 import { HeroSection } from '@/components/hero-section';
 import { KeywordsSection } from '@/components/keywords-section';
@@ -5,39 +8,30 @@ import { ProjectsSection } from '@/components/projects-section';
 import { BlogSection } from '@/components/blog-section';
 import { ContactForm } from '@/components/contact-form';
 import { Footer } from '@/components/footer';
-import { createServerClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
-async function getProjects() {
-  const supabase = createServerClient();
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('created_at', { ascending: false });
+export default function Home() {
+  const [projects, setProjects] = useState([]);
+  const [blogs, setBlogs] = useState([]);
 
-  if (error) {
-    return [];
-  }
+  useEffect(() => {
+    async function fetchData() {
+      const { data: projectsData } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-  return data || [];
-}
+      const { data: blogsData } = await supabase
+        .from('blogs')
+        .select('*')
+        .order('published_at', { ascending: false });
 
-async function getBlogs() {
-  const supabase = createServerClient();
-  const { data, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .order('published_at', { ascending: false });
+      if (projectsData) setProjects(projectsData);
+      if (blogsData) setBlogs(blogsData);
+    }
 
-  if (error) {
-    return [];
-  }
-
-  return data || [];
-}
-
-export default async function Home() {
-  const projects = await getProjects();
-  const blogs = await getBlogs();
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen">
