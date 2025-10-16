@@ -1,11 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 import { Database } from './database.types';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+function getSupabaseUrl(): string {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url) {
+    throw new Error('Missing environment variable: NEXT_PUBLIC_SUPABASE_URL');
+  }
+  return url;
+}
+
+function getSupabaseAnonKey(): string {
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!key) {
+    throw new Error('Missing environment variable: NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  }
+  return key;
+}
 
 export function createServerClient() {
-  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey(), {
     auth: {
       persistSession: false,
     },
@@ -13,7 +26,16 @@ export function createServerClient() {
 }
 
 export function createBrowserClient() {
-  return createClient<Database>(supabaseUrl, supabaseAnonKey);
+  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey());
 }
 
-export const supabase = createBrowserClient();
+let supabaseInstance: ReturnType<typeof createBrowserClient> | null = null;
+
+export const supabase = new Proxy({} as ReturnType<typeof createBrowserClient>, {
+  get(target, prop) {
+    if (!supabaseInstance) {
+      supabaseInstance = createBrowserClient();
+    }
+    return (supabaseInstance as any)[prop];
+  }
+});
