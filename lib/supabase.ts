@@ -1,24 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { Database } from './database.types';
 
-function getSupabaseUrl(): string {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!url) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable');
-  }
-  return url;
-}
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-function getSupabaseAnonKey(): string {
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!key) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable');
-  }
-  return key;
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('Supabase environment variables are not configured. Please check your .env file.');
 }
 
 export function createServerClient() {
-  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey(), {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: false,
     },
@@ -26,7 +20,10 @@ export function createServerClient() {
 }
 
 export function createBrowserClient() {
-  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey());
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient<Database>(supabaseUrl, supabaseAnonKey);
 }
 
 export const supabase = createBrowserClient();
