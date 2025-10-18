@@ -1,11 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 import { Database } from './database.types';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+function getSupabaseUrl(): string {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable');
+  }
+  return url;
+}
+
+function getSupabaseAnonKey(): string {
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!key) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable');
+  }
+  return key;
+}
 
 export function createServerClient() {
-  return createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey(), {
     auth: {
       persistSession: false,
     },
@@ -13,7 +26,7 @@ export function createServerClient() {
 }
 
 export function createBrowserClient() {
-  return createClient<Database>(supabaseUrl, supabaseAnonKey);
+  return createClient<Database>(getSupabaseUrl(), getSupabaseAnonKey());
 }
 
 export const supabase = createBrowserClient();
