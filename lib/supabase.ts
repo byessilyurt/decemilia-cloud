@@ -1,29 +1,30 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Database } from './database.types';
 
-let browserClient: SupabaseClient<Database> | null = null;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+let client: SupabaseClient<Database> | null = null;
 
 export function getSupabaseClient(): SupabaseClient<Database> {
-  if (typeof window === 'undefined') {
-    return createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        auth: {
-          persistSession: false,
-        },
-      }
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error(
+      'Missing Supabase environment variables. Please ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set.'
     );
   }
 
-  if (!browserClient) {
-    browserClient = createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+  if (client) {
+    return client;
   }
 
-  return browserClient;
+  client = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: typeof window !== 'undefined',
+      autoRefreshToken: typeof window !== 'undefined',
+    },
+  });
+
+  return client;
 }
 
 export const supabase = getSupabaseClient();
