@@ -9,7 +9,7 @@ export function MouseFollowerGradient({ x, y }: MouseFollowerGradientProps) {
   return (
     <>
       <div
-        className="pointer-events-none absolute hidden md:block will-change-transform opacity-40 mix-blend-screen"
+        className="pointer-events-none absolute will-change-transform opacity-40 mix-blend-screen"
         style={{
           width: '700px',
           height: '700px',
@@ -22,7 +22,7 @@ export function MouseFollowerGradient({ x, y }: MouseFollowerGradientProps) {
       />
 
       <div
-        className="pointer-events-none absolute hidden md:block will-change-transform opacity-30 mix-blend-screen"
+        className="pointer-events-none absolute will-change-transform opacity-30 mix-blend-screen"
         style={{
           width: '400px',
           height: '400px',
