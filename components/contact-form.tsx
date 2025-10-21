@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Send, Mail, User, MessageSquare } from 'lucide-react';
+import { Send, Mail, User, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import {
   Form,
@@ -19,6 +20,7 @@ import { Textarea } from './ui/textarea';
 import { toast } from 'sonner';
 import { supabase } from '@/lib/supabase';
 import type { Database } from '@/lib/database.types';
+import { ContactMethodCards } from './contact-method-cards';
 
 const contactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
@@ -30,6 +32,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -52,11 +55,16 @@ export function ContactForm() {
 
       if (error) throw error;
 
+      setIsSuccess(true);
+
       toast.success('Message sent successfully!', {
         description: 'Thank you for reaching out. I will get back to you soon.',
       });
 
-      form.reset();
+      setTimeout(() => {
+        setIsSuccess(false);
+        form.reset();
+      }, 3000);
     } catch (error) {
       toast.error('Failed to send message', {
         description: 'Please try again or contact me directly via email.',
@@ -79,8 +87,32 @@ export function ContactForm() {
             </p>
           </div>
 
+          <ContactMethodCards />
+
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative">
+              <AnimatePresence>
+                {isSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="absolute inset-0 flex items-center justify-center bg-background/95 backdrop-blur-sm z-10 rounded-lg"
+                  >
+                    <div className="text-center">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                      >
+                        <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                      </motion.div>
+                      <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
+                      <p className="text-muted-foreground">I&apos;ll get back to you soon.</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <FormField
                 control={form.control}
                 name="name"
@@ -91,11 +123,16 @@ export function ContactForm() {
                       Name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Your name"
-                        className="h-12 text-base"
-                        {...field}
-                      />
+                      <motion.div
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Input
+                          placeholder="Your name"
+                          className="h-12 text-base"
+                          {...field}
+                        />
+                      </motion.div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -112,12 +149,17 @@ export function ContactForm() {
                       Email
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="your.email@example.com"
-                        className="h-12 text-base"
-                        {...field}
-                      />
+                      <motion.div
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Input
+                          type="email"
+                          placeholder="your.email@example.com"
+                          className="h-12 text-base"
+                          {...field}
+                        />
+                      </motion.div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,11 +176,16 @@ export function ContactForm() {
                       Message
                     </FormLabel>
                     <FormControl>
-                      <Textarea
-                        placeholder="Tell me about your project..."
-                        className="min-h-[150px] text-base resize-none"
-                        {...field}
-                      />
+                      <motion.div
+                        whileFocus={{ scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Textarea
+                          placeholder="Tell me about your project..."
+                          className="min-h-[150px] text-base resize-none"
+                          {...field}
+                        />
+                      </motion.div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
