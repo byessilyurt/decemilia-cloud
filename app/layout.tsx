@@ -10,28 +10,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://yourportfolio.com'),
+  metadataBase: new URL('https://decemilia.com'),
   title: {
-    default: 'Your Name | Developer & Creator',
-    template: '%s | Your Name',
+    default: 'Yusuf Yesilyurt | Software Engineer',
+    template: '%s | Yusuf Yesilyurt',
   },
-  description: 'Personal portfolio showcasing web development projects, technical articles, and expertise in modern web technologies.',
-  keywords: ['Web Developer', 'Full Stack', 'React', 'Next.js', 'TypeScript', 'Portfolio'],
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
+  description: 'Software Engineer specializing in JavaScript, Python, React, and modern web technologies. Master\'s in Computer Engineering from Wroclaw University.',
+  keywords: ['Software Engineer', 'Full Stack Developer', 'JavaScript', 'Python', 'React', 'TypeScript', 'Next.js', 'Portfolio'],
+  authors: [{ name: 'Yusuf Yesilyurt' }],
+  creator: 'Yusuf Yesilyurt',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://yourportfolio.com',
-    title: 'Your Name | Developer & Creator',
-    description: 'Personal portfolio showcasing web development projects and technical articles.',
-    siteName: 'Your Name Portfolio',
+    url: 'https://decemilia.com',
+    title: 'Yusuf Yesilyurt | Software Engineer',
+    description: 'Software Engineer specializing in JavaScript, Python, and modern web technologies.',
+    siteName: 'Yusuf Yesilyurt Portfolio',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Your Name | Developer & Creator',
-    description: 'Personal portfolio showcasing web development projects and technical articles.',
-    creator: '@yourusername',
+    title: 'Yusuf Yesilyurt | Software Engineer',
+    description: 'Software Engineer specializing in JavaScript, Python, and modern web technologies.',
+    creator: '@yesilyurt',
   },
   robots: {
     index: true,

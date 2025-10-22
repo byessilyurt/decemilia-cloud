@@ -16,7 +16,7 @@ const technologies = [
     icon: Terminal,
     description: 'Type Safety',
     gradient: 'from-blue-600 to-blue-800',
-    span: 'md:col-span-1 md:row-span-2',
+    span: 'md:col-span-2 md:row-span-1',
   },
   {
     name: 'Node.js',
@@ -51,7 +51,7 @@ const technologies = [
     icon: Cloud,
     description: 'Cloud',
     gradient: 'from-orange-500 to-red-600',
-    span: 'md:col-span-1 md:row-span-1',
+    span: 'md:col-span-2 md:row-span-1',
   },
 ];
 

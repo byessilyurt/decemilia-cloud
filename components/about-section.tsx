@@ -153,7 +153,7 @@ export function AboutSection() {
                 <Button
                   size="lg"
                   className="glow-hover"
-                  onClick={() => window.open('#', '_blank')}
+                  onClick={() => window.open('/CV - Yusuf Yesilyurt.pdf', '_blank')}
                 >
                   <Download className="mr-2 h-5 w-5" />
                   Download CV
