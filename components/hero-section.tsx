@@ -32,15 +32,15 @@ export function HeroSection() {
         <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
           <div className="space-y-3 sm:space-y-4">
             <h2 className="text-base sm:text-lg md:text-xl font-medium text-muted-foreground tracking-wide animate-fade-in">
-              Yusuf Yesilyurt
+              decemilia
             </h2>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-gradient">
-              Full-Stack Developer & AI Engineer
+              We Build Digital Products That Drive Results
             </h1>
           </div>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Crafting scalable web experiences with modern technologies
+            Web applications, e-commerce, automation, and custom software solutions for ambitious businesses
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 sm:pt-8">
@@ -49,9 +49,19 @@ export function HeroSection() {
               className="glow-hover text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto"
               asChild
             >
-              <a href="#projects">
-                View Projects
+              <a href="#case-studies">
+                View Our Work
                 <ArrowDown className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto"
+              asChild
+            >
+              <a href="#contact">
+                Start a Project
               </a>
             </Button>
           </div>

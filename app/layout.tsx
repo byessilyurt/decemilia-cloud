@@ -10,28 +10,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://decemilia.com'),
+  metadataBase: new URL('https://decemilia.cloud'),
   title: {
-    default: 'Yusuf Yesilyurt | Software Engineer',
-    template: '%s | Yusuf Yesilyurt',
+    default: 'Decemilia | Web Applications & Digital Solutions',
+    template: '%s | Decemilia',
   },
-  description: 'Software Engineer specializing in JavaScript, Python, React, and modern web technologies. Master\'s in Computer Engineering from Wroclaw University.',
-  keywords: ['Software Engineer', 'Full Stack Developer', 'JavaScript', 'Python', 'React', 'TypeScript', 'Next.js', 'Portfolio'],
-  authors: [{ name: 'Yusuf Yesilyurt' }],
-  creator: 'Yusuf Yesilyurt',
+  description: 'We build web applications, e-commerce solutions, automation workflows, and custom software for ambitious businesses.',
+  keywords: ['Web Development', 'Custom Software', 'E-commerce Solutions', 'Automation', 'Micro-SaaS', 'Next.js', 'React'],
+  authors: [{ name: 'Decemilia' }],
+  creator: 'Decemilia',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://decemilia.com',
-    title: 'Yusuf Yesilyurt | Software Engineer',
-    description: 'Software Engineer specializing in JavaScript, Python, and modern web technologies.',
-    siteName: 'Yusuf Yesilyurt Portfolio',
+    url: 'https://decemilia.cloud',
+    title: 'Decemilia | Web Applications & Digital Solutions',
+    description: 'We build web applications, e-commerce solutions, automation workflows, and custom software.',
+    siteName: 'Decemilia',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Yusuf Yesilyurt | Software Engineer',
-    description: 'Software Engineer specializing in JavaScript, Python, and modern web technologies.',
-    creator: '@yesilyurt',
+    title: 'Decemilia | Web Applications & Digital Solutions',
+    description: 'Custom web applications, e-commerce, and automation solutions.',
   },
   robots: {
     index: true,

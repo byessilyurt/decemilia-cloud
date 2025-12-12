@@ -58,7 +58,7 @@ export function ContactForm() {
       setIsSuccess(true);
 
       toast.success('Message sent successfully!', {
-        description: 'Thank you for reaching out. I will get back to you soon.',
+        description: 'Thank you for reaching out. We will get back to you soon.',
       });
 
       setTimeout(() => {
@@ -80,10 +80,10 @@ export function ContactForm() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-              Get In Touch
+              Start Your Project
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground">
-              Have a project in mind? Let&apos;s work together to build something amazing.
+              Ready to build something? Tell us about your project and we&apos;ll get back to you within 24 hours.
             </p>
           </div>
 
@@ -108,7 +108,7 @@ export function ContactForm() {
                         <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
                       </motion.div>
                       <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                      <p className="text-muted-foreground">I&apos;ll get back to you soon.</p>
+                      <p className="text-muted-foreground">We&apos;ll get back to you soon.</p>
                     </div>
                   </motion.div>
                 )}
@@ -181,7 +181,7 @@ export function ContactForm() {
                         transition={{ duration: 0.2 }}
                       >
                         <Textarea
-                          placeholder="Tell me about your project..."
+                          placeholder="Tell us about your project..."
                           className="min-h-[150px] text-base resize-none"
                           {...field}
                         />
@@ -212,12 +212,12 @@ export function ContactForm() {
 
           <div className="mt-12 text-center">
             <p className="text-sm text-muted-foreground">
-              Or email me directly at{' '}
+              Or email us directly at{' '}
               <a
-                href="mailto:y.yesilyurt14@gmail.com"
+                href="mailto:hello@decemilia.cloud"
                 className="text-primary hover:underline"
               >
-                y.yesilyurt14@gmail.com
+                hello@decemilia.cloud
               </a>
             </p>
           </div>

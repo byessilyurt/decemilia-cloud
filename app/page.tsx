@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Navigation } from '@/components/navigation';
 import { HeroSection } from '@/components/hero-section';
-import { AboutSection } from '@/components/about-section';
-import { TechnologiesBento } from '@/components/technologies-bento';
-import { ProjectsSection } from '@/components/projects-section';
+import { ServicesSection } from '@/components/services-section';
+import { CaseStudiesSection } from '@/components/projects-section';
 import { BlogSection } from '@/components/blog-section';
 import { ContactForm } from '@/components/contact-form';
 import { Footer } from '@/components/footer';
@@ -36,7 +35,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-
   return (
     <div className="min-h-screen">
       <CustomCursor />
@@ -44,9 +42,8 @@ export default function Home() {
       <BackToTop />
       <main>
         <HeroSection />
-        <AboutSection />
-        <TechnologiesBento />
-        <ProjectsSection projects={projects} />
+        <ServicesSection />
+        <CaseStudiesSection projects={projects} />
         <BlogSection blogs={blogs} />
         <ContactForm />
       </main>

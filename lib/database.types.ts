@@ -23,6 +23,9 @@ export interface Database {
           featured: boolean;
           created_at: string;
           updated_at: string;
+          category: 'web-application' | 'ecommerce' | 'automation' | 'micro-saas' | 'extension' | 'desktop';
+          client_name: string | null;
+          outcome: string | null;
         };
         Insert: {
           id?: string;
@@ -37,6 +40,9 @@ export interface Database {
           featured?: boolean;
           created_at?: string;
           updated_at?: string;
+          category?: 'web-application' | 'ecommerce' | 'automation' | 'micro-saas' | 'extension' | 'desktop';
+          client_name?: string | null;
+          outcome?: string | null;
         };
         Update: {
           id?: string;
@@ -51,6 +57,9 @@ export interface Database {
           featured?: boolean;
           created_at?: string;
           updated_at?: string;
+          category?: 'web-application' | 'ecommerce' | 'automation' | 'micro-saas' | 'extension' | 'desktop';
+          client_name?: string | null;
+          outcome?: string | null;
         };
       };
       blogs: {

@@ -70,7 +70,8 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <p>&copy; {currentYear} Yusuf Yesilyurt. All rights reserved.</p>
+            <p>&copy; {currentYear} Decemilia. All rights reserved.</p>
+            <p className="text-xs mt-1 text-muted-foreground/70">Founded by Yusuf Yesilyurt</p>
           </motion.div>
         </div>
       </div>

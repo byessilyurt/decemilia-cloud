@@ -21,7 +21,7 @@ export function Navigation() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'projects', 'blog', 'contact'];
+      const sections = ['home', 'services', 'case-studies', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -46,9 +46,9 @@ export function Navigation() {
 
   const navLinks = [
     { href: '#home', label: 'Home', id: 'home' },
-    { href: '#projects', label: 'Projects', id: 'projects' },
-    { href: '#blog', label: 'Blog', id: 'blog' },
-    { href: '#contact', label: 'Contact', id: 'contact' },
+    { href: '#services', label: 'Services', id: 'services' },
+    { href: '#case-studies', label: 'Work', id: 'case-studies' },
+    { href: '#contact', label: 'Start Project', id: 'contact' },
   ];
 
   return (
