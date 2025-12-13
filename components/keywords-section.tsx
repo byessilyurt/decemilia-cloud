@@ -51,7 +51,7 @@ export function KeywordsSection() {
               <span
                 className={`
                   text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold
-                  bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500
+                  bg-gradient-to-r from-cyan-400 via-teal-400 to-blue-500
                   bg-clip-text text-transparent
                   transition-all duration-700 ease-out
                   hover:scale-110 cursor-default
@@ -64,7 +64,7 @@ export function KeywordsSection() {
                   textShadow: '0 0 0px transparent',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.textShadow = '0 0 20px rgba(168, 85, 247, 0.8)';
+                  e.currentTarget.style.textShadow = '0 0 20px rgba(6, 182, 212, 0.8)';
                   e.currentTarget.style.transform = 'scale(1.12)';
                 }}
                 onMouseLeave={(e) => {
@@ -77,7 +77,7 @@ export function KeywordsSection() {
               {index < keywords.length - 1 && (
                 <span
                   className={`
-                    text-xl sm:text-2xl md:text-3xl text-purple-400/60
+                    text-xl sm:text-2xl md:text-3xl text-cyan-400/60
                     transition-all duration-700 ease-out
                     ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
                   `}

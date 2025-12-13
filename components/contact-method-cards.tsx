@@ -19,7 +19,7 @@ const contactMethods = [
     title: 'Schedule Call',
     subtitle: 'Book 30min chat',
     icon: Calendar,
-    gradient: 'from-purple-500 to-pink-500',
+    gradient: 'from-cyan-500 to-teal-500',
     buttonText: 'Pick a Time',
     action: () => window.open('https://calendly.com', '_blank'),
   },

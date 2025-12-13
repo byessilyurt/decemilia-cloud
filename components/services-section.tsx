@@ -25,8 +25,8 @@ const services = [
     icon: Workflow,
     description: 'Eliminate repetitive tasks. Connect your tools and automate operations.',
     examples: 'API Integrations, n8n, Data Pipelines',
-    gradient: 'from-purple-500/20 to-pink-500/20',
-    borderColor: 'hover:border-purple-500/50',
+    gradient: 'from-cyan-500/20 to-teal-500/20',
+    borderColor: 'hover:border-cyan-500/50',
   },
   {
     name: 'Micro-SaaS Products',

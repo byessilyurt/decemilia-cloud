@@ -60,15 +60,14 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        purple: {
-          400: '#a855f7',
-          500: '#9333ea',
+        cyan: {
+          400: '#22d3ee',
+          500: '#06b6d4',
+          600: '#0891b2',
         },
-        pink: {
-          500: '#ec4899',
-        },
-        indigo: {
-          500: '#6366f1',
+        teal: {
+          400: '#2dd4bf',
+          500: '#14b8a6',
         },
       },
       keyframes: {

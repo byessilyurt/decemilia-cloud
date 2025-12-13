@@ -6,67 +6,47 @@ interface MouseFollowerGradientProps {
 }
 
 export function MouseFollowerGradient({ x, y }: MouseFollowerGradientProps) {
-  // Cloud positioned directly above cursor (raindrop falls from cloud)
-  const cloudCenterX = x;
-  const cloudBottomY = y - 80; // Cloud bottom 80px above cursor
+  // Cloud fixed in sky, only tracks horizontal movement
+  const cloudX = x;
+  const cloudY = 120; // Fixed height in the "sky"
 
   return (
-    <>
-      {/* Main cloud body - centered above cursor */}
-      <div
-        className="pointer-events-none absolute will-change-transform opacity-15 mix-blend-screen"
-        style={{
-          width: '400px',
-          height: '250px',
-          background: 'radial-gradient(ellipse 100% 100%, rgba(168, 85, 247, 0.5) 0%, rgba(147, 51, 234, 0.2) 40%, transparent 70%)',
-          filter: 'blur(40px)',
-          transform: `translate(${cloudCenterX - 200}px, ${cloudBottomY - 200}px)`,
-          transition: 'transform 0.15s ease-out',
-          zIndex: 1,
-        }}
-      />
+    <svg
+      className="pointer-events-none absolute will-change-transform"
+      style={{
+        transform: `translate(${cloudX - 150}px, ${cloudY}px)`,
+        transition: 'transform 0.2s ease-out',
+        zIndex: 1,
+      }}
+      width="300"
+      height="150"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      {/* Glow filter */}
+      <defs>
+        <filter id="cloud-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.5" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.1" />
+        </linearGradient>
+      </defs>
 
-      {/* Cloud bump - left */}
-      <div
-        className="pointer-events-none absolute will-change-transform opacity-12 mix-blend-screen"
-        style={{
-          width: '200px',
-          height: '200px',
-          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(147, 51, 234, 0.15) 50%, transparent 70%)',
-          filter: 'blur(35px)',
-          transform: `translate(${cloudCenterX - 280}px, ${cloudBottomY - 220}px)`,
-          transition: 'transform 0.18s ease-out',
-          zIndex: 1,
-        }}
+      {/* Cloud shape from logo */}
+      <path
+        d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"
+        fill="url(#cloud-gradient)"
+        stroke="#06b6d4"
+        strokeWidth="0.5"
+        strokeOpacity="0.3"
+        filter="url(#cloud-glow)"
       />
-
-      {/* Cloud bump - top center */}
-      <div
-        className="pointer-events-none absolute will-change-transform opacity-18 mix-blend-screen"
-        style={{
-          width: '250px',
-          height: '250px',
-          background: 'radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, rgba(168, 85, 247, 0.15) 50%, transparent 70%)',
-          filter: 'blur(40px)',
-          transform: `translate(${cloudCenterX - 125}px, ${cloudBottomY - 300}px)`,
-          transition: 'transform 0.12s ease-out',
-          zIndex: 1,
-        }}
-      />
-
-      {/* Cloud bump - right */}
-      <div
-        className="pointer-events-none absolute will-change-transform opacity-12 mix-blend-screen"
-        style={{
-          width: '180px',
-          height: '180px',
-          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, rgba(147, 51, 234, 0.15) 50%, transparent 70%)',
-          filter: 'blur(35px)',
-          transform: `translate(${cloudCenterX + 80}px, ${cloudBottomY - 200}px)`,
-          transition: 'transform 0.2s ease-out',
-          zIndex: 1,
-        }}
-      />
-    </>
+    </svg>
   );
 }
