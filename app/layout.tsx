@@ -11,6 +11,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://decemilia.cloud'),
+  icons: {
+    icon: '/favicon.svg',
+  },
   title: {
     default: 'Decemilia | Web Applications & Digital Solutions',
     template: '%s | Decemilia',
