@@ -17,7 +17,7 @@ export function HeroSection() {
     >
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
 
-      <MouseFollowerGradient x={mousePosition.x} y={mousePosition.y} />
+      <MouseFollowerGradient mouseX={mousePosition.x} />
 
       <div
         className="absolute inset-0 opacity-20"
