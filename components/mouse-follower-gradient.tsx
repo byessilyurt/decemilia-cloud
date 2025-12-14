@@ -58,17 +58,32 @@ interface MouseFollowerGradientProps {
 }
 
 export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
-  // State for the smooth interpolated positions
-  const [positions, setPositions] = useState({ left: 0, right: 0 });
-  
   // Refs for physics loop
   const requestRef = useRef<number>();
-  const currentPosRef = useRef({ left: 0, right: 0 });
   const windowWidthRef = useRef(1200); // Default fallback
+  const initializedRef = useRef(false);
+
+  // Initialize positions at home (will be set properly on mount)
+  const getHomePositions = (width: number) => ({
+    left: width * 0.2,
+    right: width * 0.8,
+  });
+
+  const [positions, setPositions] = useState(() => getHomePositions(1200));
+  const currentPosRef = useRef(getHomePositions(1200));
 
   useEffect(() => {
-    // Capture window width for calculations
+    // Capture window width and set initial positions immediately
     windowWidthRef.current = window.innerWidth;
+
+    // Set clouds to home positions instantly on first load
+    if (!initializedRef.current) {
+      const homePos = getHomePositions(window.innerWidth);
+      currentPosRef.current = homePos;
+      setPositions(homePos);
+      initializedRef.current = true;
+    }
+
     const handleResize = () => { windowWidthRef.current = window.innerWidth; };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
