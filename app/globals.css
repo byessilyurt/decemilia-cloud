@@ -42,12 +42,6 @@
   }
 }
 
-@media (min-width: 768px) {
-  body {
-    cursor: none;
-  }
-}
-
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-muted-foreground;

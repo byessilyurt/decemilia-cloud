@@ -1,85 +1,120 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 export function CustomCursor() {
+  const [isHovering, setIsHovering] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
-  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+
+  // 1. RAW MOUSE POSITION (For the center dot - Precision)
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // 2. SPRING PHYSICS (For the outer ring - Fluidity)
+  // Stiffness 150, Damping 20 = smooth, watery delay
+  const springConfig = { stiffness: 150, damping: 20, mass: 0.5 };
+  const ringX = useSpring(mouseX, springConfig);
+  const ringY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Disable on mobile
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) return;
 
     setIsVisible(true);
 
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
+
+    // 3. SMART HOVER DETECTION
+    // Automatically detects links and buttons to change cursor shape
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.closest('a') || 
+        target.closest('button') ||
+        target.classList.contains('cursor-pointer')
+      ) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
     };
 
     window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseover', handleMouseOver);
+
+    // Hide system cursor
+    document.body.style.cursor = 'none';
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseover', handleMouseOver);
+      document.body.style.cursor = 'auto';
     };
-  }, [cursorX, cursorY]);
+  }, [mouseX, mouseY]);
 
   if (!isVisible) return null;
 
   return (
-    <motion.svg
-      className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
-      style={{
-        x: cursorX,
-        y: cursorY,
-        translateX: '-50%',
-        translateY: '-20%',
-      }}
-      width="20"
-      height="28"
-      viewBox="0 0 20 28"
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="droplet-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-          <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.7" />
-          <stop offset="60%" stopColor="#06b6d4" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#0891b2" stopOpacity="0.3" />
-        </linearGradient>
-        <filter id="droplet-glow">
-          <feGaussianBlur stdDeviation="1" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      {/* Organic water droplet - asymmetric, natural shape */}
-      <path
-        d="M10 1
-           C11 3, 13 6, 15 10
-           C17 14, 18 17, 17.5 20
-           C17 23, 14 26, 10 27
-           C6 26, 3 23, 2.5 20
-           C2 17, 3 14, 5 10
-           C7 6, 9 3, 10 1Z"
-        fill="url(#droplet-gradient)"
-        filter="url(#droplet-glow)"
+    <>
+      {/* ELEMENT 1: THE OUTER RING (The "Ripple") */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9998] border border-cyan-400 rounded-full mix-blend-screen"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{
+          // Hovering: scale up to 40px
+          // Clicking: scale down to 15px (squish)
+          // Normal: 24px
+          width: isHovering ? 64 : isClicking ? 24 : 48,
+          height: isHovering ? 64 : isClicking ? 24 : 48,
+          opacity: isHovering ? 0.5 : 0.3,
+          backgroundColor: isHovering ? 'rgba(34, 211, 238, 0.1)' : 'transparent', // Subtle fill on hover
+        }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       />
 
-      {/* Inner highlight for depth */}
-      <ellipse
-        cx="7"
-        cy="12"
-        rx="2.5"
-        ry="4"
-        fill="#22d3ee"
-        fillOpacity="0.3"
-        transform="rotate(-15 7 12)"
+      {/* ELEMENT 2: THE INNER DOT (The "Pointer") */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+        style={{
+          x: mouseX,
+          y: mouseY,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{
+          // When hovering, the dot disappears into the ring (optional, or it stays small)
+          width: isHovering ? 16 : 12,
+          height: isHovering ? 16 : 12,
+        }}
+        transition={{ duration: 0.1 }}
       />
-    </motion.svg>
+
+      {/* Global override */}
+      <style jsx global>{`
+        body, a, button, input, select, textarea {
+          cursor: none !important;
+        }
+      `}</style>
+    </>
   );
 }
