@@ -93,7 +93,7 @@ export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
         <div
           className="absolute top-0 will-change-transform"
           style={{
-            transform: `translate3d(${positions.c1 - 450}px, -180px, 0)`,
+            transform: `translate3d(${positions.c1 - 450}px, 40px, 0)`,
             transition: 'none',
           }}
         >
@@ -107,7 +107,7 @@ export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
         <div
           className="absolute top-0 will-change-transform"
           style={{
-            transform: `translate3d(${positions.c2 - 50}px, -200px, 0)`, 
+            transform: `translate3d(${positions.c2 - 50}px, 20px, 0)`,
             transition: 'none',
           }}
         >
