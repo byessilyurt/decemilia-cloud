@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-// --- Sub-component (Unchanged) ---
+// --- Helper: Keep numbers inside boundaries ---
+const clamp = (val: number, min: number, max: number) => Math.min(Math.max(val, min), max);
+
+// --- Sub-component (Visuals only) ---
 function CloudLayer({ 
   scale, 
   opacity, 
@@ -55,24 +58,66 @@ interface MouseFollowerGradientProps {
 }
 
 export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
-  const [positions, setPositions] = useState({ c1: mouseX, c2: mouseX });
+  // State for the smooth interpolated positions
+  const [positions, setPositions] = useState({ left: 0, right: 0 });
   
+  // Refs for physics loop
   const requestRef = useRef<number>();
-  const currentPosRef = useRef({ c1: mouseX, c2: mouseX });
+  const currentPosRef = useRef({ left: 0, right: 0 });
+  const windowWidthRef = useRef(1200); // Default fallback
+
+  useEffect(() => {
+    // Capture window width for calculations
+    windowWidthRef.current = window.innerWidth;
+    const handleResize = () => { windowWidthRef.current = window.innerWidth; };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const animate = () => {
-    // c1 = Left Cloud (Main) - slightly faster response
-    // c2 = Right Cloud (Background) - lazier response
-    const dragFactor1 = 0.05; 
-    const dragFactor2 = 0.03;
-
-    const target = mouseX;
+    const width = windowWidthRef.current;
     
-    // Smooth Lerp
-    currentPosRef.current.c1 += (target - currentPosRef.current.c1) * dragFactor1;
-    currentPosRef.current.c2 += (target - currentPosRef.current.c2) * dragFactor2;
+    // --- ZONE CONFIGURATION ---
+    // The "Home" X coordinates for the clouds (where they sit naturally)
+    const leftHome = width * 0.2;  // 20% from left
+    const rightHome = width * 0.8; // 80% from left (20% from right)
+    
+    // The "Range" (Leash) - How far can they travel from home?
+    const maxTravel = 100; // px
+    
+    // 1. CALCULATE TARGETS (Where they WANT to go)
+    // We map mouse position to a small offset from home
+    
+    // Left Cloud Target: 
+    // It only cares about mouse if mouse is on the LEFT half (width / 2)
+    // If mouse is on right, target is just 'leftHome' (it returns to rest)
+    let targetLeft = leftHome;
+    if (mouseX < width / 2) {
+        // Calculate offset: map 0 -> width/2 to -100 -> +100
+        const ratio = (mouseX / (width / 2)) - 0.5; // -0.5 to 0.5
+        targetLeft = leftHome + (ratio * maxTravel * 2);
+    }
 
-    setPositions({ ...currentPosRef.current });
+    // Right Cloud Target:
+    // Only cares if mouse is on RIGHT half
+    let targetRight = rightHome;
+    if (mouseX > width / 2) {
+        const ratio = ((mouseX - width/2) / (width / 2)) - 0.5;
+        targetRight = rightHome + (ratio * maxTravel * 2);
+    }
+
+    // 2. APPLY PHYSICS (The Smoothness)
+    // Left cloud is heavier (0.03), Right is lighter (0.04) or vice versa
+    const currentLeft = currentPosRef.current.left;
+    const currentRight = currentPosRef.current.right;
+
+    // Standard Lerp
+    const newLeft = currentLeft + (targetLeft - currentLeft) * 0.03;
+    const newRight = currentRight + (targetRight - currentRight) * 0.03;
+
+    currentPosRef.current = { left: newLeft, right: newRight };
+    setPositions({ left: newLeft, right: newRight });
+    
     requestRef.current = requestAnimationFrame(animate);
   };
 
@@ -85,34 +130,31 @@ export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
     <>
       <div className="pointer-events-none absolute inset-0 overflow-hidden select-none z-[0]">
         
-        {/* LEFT CLOUD (Main) 
-            Position: mouseX - 450px
-            Logic: Since width is 500, center is 250. 
-            -250 centers it on mouse. -450 shifts it 200px to the LEFT.
+        {/* LEFT CLOUD 
+            Centered on its position: translate(X - 250px)
         */}
         <div
           className="absolute top-0 will-change-transform"
           style={{
-            transform: `translate3d(${positions.c1 - 450}px, 40px, 0)`,
+            transform: `translate3d(${positions.left - 250}px, 10px, 0)`,
             transition: 'none',
           }}
         >
           <CloudLayer scale={1.0} opacity={0.7} />
         </div>
 
-        {/* RIGHT CLOUD (Background/Smaller)
-            Position: mouseX - 50px
-            Logic: -250 centers it. -50 shifts it 200px to the RIGHT.
+        {/* RIGHT CLOUD 
+             Centered on its position
         */}
         <div
           className="absolute top-0 will-change-transform"
           style={{
-            transform: `translate3d(${positions.c2 - 50}px, 20px, 0)`,
+            transform: `translate3d(${positions.right - 250}px, 20px, 0)`, 
             transition: 'none',
           }}
         >
-           {/* Flipped so it doesn't look like a clone */}
-           <CloudLayer scale={0.7} opacity={0.4} flip={true} />
+           {/* Flipped and smaller */}
+           <CloudLayer scale={0.8} opacity={0.5} flip={true} />
         </div>
 
       </div>
@@ -120,13 +162,11 @@ export function MouseFollowerGradient({ mouseX }: MouseFollowerGradientProps) {
       <style jsx global>{`
         @keyframes subtle-drift {
           0% { transform: translate(0px, 0px); }
-          25% { transform: translate(15px, 5px); }
-          50% { transform: translate(5px, 15px); }
-          75% { transform: translate(-15px, 5px); }
+          50% { transform: translate(5px, 10px); }
           100% { transform: translate(0px, 0px); }
         }
         .animate-drift {
-          animation: subtle-drift 12s ease-in-out infinite;
+          animation: subtle-drift 10s ease-in-out infinite;
         }
       `}</style>
     </>
