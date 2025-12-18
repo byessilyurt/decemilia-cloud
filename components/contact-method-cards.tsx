@@ -8,11 +8,11 @@ const contactMethods = [
   {
     id: 'email',
     title: 'Email',
-    subtitle: 'y.yesilyurt14@gmail.com',
+    subtitle: 'yusuf.yesilyurt.tech@gmail.com',
     icon: Mail,
     gradient: 'from-blue-500 to-cyan-500',
     buttonText: 'Send Email',
-    action: () => window.location.href = 'mailto:y.yesilyurt14@gmail.com',
+    action: () => window.location.href = 'mailto:yusuf.yesilyurt.tech@gmail.com',
   },
   {
     id: 'schedule',

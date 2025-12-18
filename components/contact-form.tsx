@@ -75,7 +75,7 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24">
+    <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-transparent via-orange-950/10 to-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
@@ -214,10 +214,10 @@ export function ContactForm() {
             <p className="text-sm text-muted-foreground">
               Or email us directly at{' '}
               <a
-                href="mailto:hello@decemilia.cloud"
+                href="mailto:yusuf.yesilyurt.tech@gmail.com"
                 className="text-primary hover:underline"
               >
-                hello@decemilia.cloud
+                yusuf.yesilyurt.tech@gmail.com
               </a>
             </p>
           </div>

@@ -9,7 +9,7 @@ export function Footer() {
   const socialLinks = [
     { icon: Github, href: 'https://github.com/byessilyurt', label: 'GitHub', gradient: 'from-gray-600 to-gray-800' },
     { icon: Linkedin, href: 'https://linkedin.com/in/yessilyurt', label: 'LinkedIn', gradient: 'from-blue-600 to-blue-800' },
-    { icon: Mail, href: 'mailto:y.yesilyurt14@gmail.com', label: 'Email', gradient: 'from-red-600 to-red-800' },
+    { icon: Mail, href: 'mailto:yusuf.yesilyurt.tech@gmail.com', label: 'Email', gradient: 'from-red-600 to-red-800' },
   ];
 
   return (

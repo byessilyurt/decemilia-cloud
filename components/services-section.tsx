@@ -71,7 +71,7 @@ const itemVariants = {
 
 export function ServicesSection() {
   return (
-    <section id="services" className="py-16 sm:py-20 lg:py-24 bg-secondary/20">
+    <section id="services" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-secondary/30 via-secondary/20 to-transparent">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">

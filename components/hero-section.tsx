@@ -15,7 +15,7 @@ export function HeroSection() {
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-sky-400/40 via-purple-900/30 to-background" />
 
       <MouseFollowerGradient mouseX={mousePosition.x} />
 

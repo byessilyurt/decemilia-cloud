@@ -7,7 +7,7 @@ interface CaseStudiesSectionProps {
 
 export function CaseStudiesSection({ projects }: CaseStudiesSectionProps) {
   return (
-    <section id="case-studies" className="py-16 sm:py-20 lg:py-24">
+    <section id="case-studies" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-background via-background to-cyan-950/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
